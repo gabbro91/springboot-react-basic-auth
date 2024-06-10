@@ -5,13 +5,31 @@ spring:
     hibernate:
       ddl-auto: create
   datasource:
-    url: jdbc:postgresql://localhost:5432/bookdb
+    url: jdbc:postgresql://localhost:5432/assistant
     username: postgres
-    password: postgres
-
+    password: root
+  mail:
+    host: mail.labellapartners.com
+    port: 465
+    username: assistant@labellapartners.com
+    password: 3I8hNX6f6X
+    protocol: smtp
+    properties:
+        mail:
+          smtp:
+            auth: true
+            starttls:
+              enable: true
+            starttls.required: true
+            ssl:
+              enable: true
+              trust: mail.labellapartners.com
+            connectiontimeout: 5000
+            timeout: 5000
+            writetimeout: 5000
 app:
   cors:
-    allowed-origins: http://localhost:3000
+    allowed-origins: http://localhost:3000,http://localhost:3001,http://localhost:3002
 
 logging:
   level:

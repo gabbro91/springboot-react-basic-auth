@@ -22,4 +22,8 @@ public interface UserService {
     void deleteUser(User user);
 
     Optional<User> validUsernameAndPassword(String username, String password);
+
+    User updateUserRole(String username);
+
+    void verifyUser(String token);
 }

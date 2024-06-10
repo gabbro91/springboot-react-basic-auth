@@ -36,7 +36,7 @@ function Navbar() {
   return (
     <Menu inverted color='blue' stackable size='massive' style={{borderRadius: 0}}>
       <Container>
-        <Menu.Item header>Book-UI</Menu.Item>
+        <Menu.Item header>Assistant Panel</Menu.Item>
         <Menu.Item as={Link} exact='true' to="/">Home</Menu.Item>
         <Menu.Item as={Link} to="/adminpage" style={adminPageStyle()}>AdminPage</Menu.Item>
         <Menu.Item as={Link} to="/userpage" style={userPageStyle()}>UserPage</Menu.Item>

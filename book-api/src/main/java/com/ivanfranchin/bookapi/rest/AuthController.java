@@ -6,16 +6,13 @@ import com.ivanfranchin.bookapi.rest.dto.AuthResponse;
 import com.ivanfranchin.bookapi.rest.dto.LoginRequest;
 import com.ivanfranchin.bookapi.rest.dto.SignUpRequest;
 import com.ivanfranchin.bookapi.security.WebSecurityConfig;
+import com.ivanfranchin.bookapi.service.EmailService;
 import com.ivanfranchin.bookapi.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -25,6 +22,7 @@ import java.util.Optional;
 public class AuthController {
 
     private final UserService userService;
+    private final EmailService emailService;
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
@@ -47,7 +45,15 @@ public class AuthController {
         }
 
         User user = userService.saveUser(createUser(signUpRequest));
+        emailService.sendVerificationEmail(user.getEmail(), user.getVerificationToken());
+
         return new AuthResponse(user.getId(), user.getName(), user.getRole());
+    }
+
+    @GetMapping("/verify")
+    public ResponseEntity<String> verifyUser(@RequestParam String token) {
+        userService.verifyUser(token);
+        return ResponseEntity.ok("User verified successfully");
     }
 
     private User createUser(SignUpRequest signUpRequest) {
@@ -56,6 +62,11 @@ public class AuthController {
         user.setPassword(signUpRequest.getPassword());
         user.setName(signUpRequest.getName());
         user.setEmail(signUpRequest.getEmail());
+//        if ("admin@example.com".equals(signUpRequest.getEmail())) { // Modifica con la tua logica di email admin
+//            user.setRole(WebSecurityConfig.ADMIN);
+//        } else {
+//            user.setRole(WebSecurityConfig.USER);
+//        }
         user.setRole(WebSecurityConfig.USER);
         return user;
     }

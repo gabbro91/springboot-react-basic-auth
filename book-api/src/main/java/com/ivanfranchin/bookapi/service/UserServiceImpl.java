@@ -16,6 +16,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
     @Override
     public List<User> getUsers() {
@@ -46,7 +47,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User savedUser = userRepository.save(user);
         return userRepository.save(user);
+    }
+
+    public void verifyUser(String token) {
+        Optional<User> userOptional = userRepository.findByVerificationToken(token);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setEnabled(true);
+            user.setVerificationToken(null);
+            userRepository.save(user);
+        }
     }
 
     @Override
@@ -58,5 +70,16 @@ public class UserServiceImpl implements UserService {
     public Optional<User> validUsernameAndPassword(String username, String password) {
         return getUserByUsername(username)
                 .filter(user -> passwordEncoder.matches(password, user.getPassword()));
+    }
+
+    @Override
+    public User updateUserRole(String username) {
+        return null;
+    }
+
+    public User updateUserRole(String username, String role) {
+        User user = validateAndGetUserByUsername(username);
+        user.setRole(role);
+        return userRepository.save(user);
     }
 }

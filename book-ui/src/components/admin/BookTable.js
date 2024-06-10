@@ -7,7 +7,7 @@ function BookTable({ books, bookIsbn, bookTitle, bookTextSearch, handleInputChan
   if (books.length === 0) {
     bookList = (
       <Table.Row key='no-book'>
-        <Table.Cell collapsing textAlign='center' colSpan='4'>No book</Table.Cell>
+        <Table.Cell collapsing textAlign='center' colSpan='4'>No Query</Table.Cell>
       </Table.Row>
     )
   } else {
@@ -24,10 +24,11 @@ function BookTable({ books, bookIsbn, bookTitle, bookTextSearch, handleInputChan
             />
           </Table.Cell>
           <Table.Cell>
-            <Image src={`http://covers.openlibrary.org/b/isbn/${book.isbn}-M.jpg`} size='tiny' bordered rounded />
+          <Table.Cell>{book.usermail}</Table.Cell>
           </Table.Cell>
           <Table.Cell>{book.isbn}</Table.Cell>
           <Table.Cell>{book.title}</Table.Cell>
+          <Table.Cell>{book.input}</Table.Cell>
         </Table.Row>
       )
     })
@@ -42,7 +43,7 @@ function BookTable({ books, bookIsbn, bookTitle, bookTextSearch, handleInputChan
               <Input
                 action={{ icon: 'search' }}
                 name='bookTextSearch'
-                placeholder='Search by ISBN or Title'
+                placeholder='Search by User'
                 value={bookTextSearch}
                 onChange={handleInputChange}
               />
@@ -62,9 +63,10 @@ function BookTable({ books, bookIsbn, bookTitle, bookTextSearch, handleInputChan
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell width={1}/>
-            <Table.HeaderCell width={3}>Cover</Table.HeaderCell>
-            <Table.HeaderCell width={4}>ISBN</Table.HeaderCell>
-            <Table.HeaderCell width={8}>Title</Table.HeaderCell>
+            <Table.HeaderCell width={1}>User</Table.HeaderCell>
+            <Table.HeaderCell width={2}>Timestamp</Table.HeaderCell>
+            <Table.HeaderCell width={8}>Response</Table.HeaderCell>
+            <Table.HeaderCell width={8}>Input</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>

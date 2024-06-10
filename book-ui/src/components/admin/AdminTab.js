@@ -24,7 +24,7 @@ function AdminTab(props) {
       )
     },
     {
-      menuItem: { key: 'books', icon: 'book', content: 'Books' },
+      menuItem: { key: 'books', icon: 'book', content: 'Query' },
       render: () => (
         <Tab.Pane loading={isBooksLoading}>
           <BookTable

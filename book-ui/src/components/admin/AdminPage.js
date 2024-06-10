@@ -60,6 +60,16 @@ function AdminPage() {
     }
   }
 
+  const handleRoleChange = async (userId, newRole) => {
+    try {
+      await bookApi.updateUserRole(user, userId, newRole)
+      setUsers(users.map(u => (u.id === userId ? { ...u, role: newRole } : u)))
+    } catch (error) {
+      handleLogError(error)
+    }
+  }
+  
+
   const handleSearchUser = async () => {
     try {
       const response = await bookApi.getUsers(user, userUsernameSearch)

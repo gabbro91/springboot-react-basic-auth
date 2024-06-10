@@ -11,17 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "books")
-public class Book {
+@Table(name = "query")
+public class Query {
 
     @Id
-    private String isbn;
+    private String log;
 
     private String title;
-
-    private String input;
-
-    private String usermail;
-
-
 }

@@ -13,6 +13,7 @@ function Signup() {
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [created, setCreated] = useState(false)
   const [isError, setIsError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
 
@@ -45,7 +46,7 @@ function Signup() {
       const authdata = window.btoa(username + ':' + password)
       const authenticatedUser = { id, name, role, authdata }
 
-      Auth.userLogin(authenticatedUser)
+      //Auth.userLogin(authenticatedUser)
 
       setUsername('')
       setPassword('')
@@ -53,6 +54,7 @@ function Signup() {
       setEmail('')
       setIsError(false)
       setErrorMessage('')
+      setCreated(true)
     } catch (error) {
       handleLogError(error)
       if (error.response && error.response.data) {
@@ -69,7 +71,7 @@ function Signup() {
     }
   }
 
-  if (isLoggedIn) {
+  if (created) {
     return <Navigate to='/' />
   }
 
@@ -116,12 +118,12 @@ function Signup() {
               value={email}
               onChange={handleInputChange}
             />
-            <Button color='blue' fluid size='large'>Signup</Button>
+            <Button color='blue' fluid size='large'>Create User</Button>
           </Segment>
         </Form>
-        <Message>{`Already have an account? `}
+        {/* <Message>{`Already have an account? `}
           <NavLink to="/login" color='teal'>Login</NavLink>
-        </Message>
+        </Message> */}
         {isError && <Message negative>{errorMessage}</Message>}
       </Grid.Column>
     </Grid>

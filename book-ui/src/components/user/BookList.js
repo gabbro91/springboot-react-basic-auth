@@ -4,7 +4,7 @@ import { Grid, Header, Form, Icon, Image, Input, Item, Segment } from 'semantic-
 function BookList({ isBooksLoading, bookTextSearch, books, handleInputChange, handleSearchBook }) {
   let bookList
   if (books.length === 0) {
-    bookList = <Item key='no-book'>No book</Item>
+    bookList = <Item key='no-book'>No query</Item>
   } else {
     bookList = books.map(book => {
       return (
@@ -29,7 +29,7 @@ function BookList({ isBooksLoading, bookTextSearch, books, handleInputChange, ha
           <Grid.Column width='3'>
             <Header as='h2'>
               <Icon name='book' />
-              <Header.Content>Books</Header.Content>
+              <Header.Content>Query</Header.Content>
             </Header>
           </Grid.Column>
           <Grid.Column>
@@ -37,7 +37,7 @@ function BookList({ isBooksLoading, bookTextSearch, books, handleInputChange, ha
               <Input
                 action={{ icon: 'search' }}
                 name='bookTextSearch'
-                placeholder='Search by ISBN or Title'
+                placeholder='Search by query'
                 value={bookTextSearch}
                 onChange={handleInputChange}
               />

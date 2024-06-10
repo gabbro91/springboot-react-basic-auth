@@ -1,7 +1,12 @@
 import React from 'react'
-import { Form, Button, Input, Table } from 'semantic-ui-react'
+import { NavLink } from 'react-router-dom'
+import { Form, Button, Input, Table, Select, Icon } from 'semantic-ui-react'
 
-function UserTable({ users, userUsernameSearch, handleInputChange, handleDeleteUser, handleSearchUser }) {
+function UserTable({ users, userUsernameSearch, handleInputChange, handleDeleteUser, handleSearchUser, handleRoleChange }) {
+  const roleOptions = [
+    { key: 'user', text: 'User', value: 'user' },
+    { key: 'admin', text: 'Admin', value: 'admin' }
+  ]
   let userList
   if (users.length === 0) {
     userList = (
@@ -28,6 +33,13 @@ function UserTable({ users, userUsernameSearch, handleInputChange, handleDeleteU
           <Table.Cell>{user.name}</Table.Cell>
           <Table.Cell>{user.email}</Table.Cell>
           <Table.Cell>{user.role}</Table.Cell>
+          
+          <Select
+              options={roleOptions}
+              value={roleOptions.find(option => option.value === user.role)}
+              onChange={(e, { value }) => handleRoleChange(user.id, value)}
+              //disabled={user.username === 'admin'}
+              />
         </Table.Row>
       )
     })
@@ -44,6 +56,10 @@ function UserTable({ users, userUsernameSearch, handleInputChange, handleDeleteU
           onChange={handleInputChange}
         />
       </Form>
+      {/* <Button icon labelPosition='right'>
+          Create<Icon name='add' />
+        </Button> */}
+        <NavLink to="/signup" color='teal'>Create User</NavLink>
       <Table compact striped selectable>
         <Table.Header>
           <Table.Row>

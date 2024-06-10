@@ -1,13 +1,10 @@
 package com.ivanfranchin.bookapi.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -27,6 +24,8 @@ public class User {
     private String name;
     private String email;
     private String role;
+    private boolean enabled;
+    private String verificationToken;
 
     public User(String username, String password, String name, String email, String role) {
         this.username = username;
@@ -34,5 +33,7 @@ public class User {
         this.name = name;
         this.email = email;
         this.role = role;
+        this.enabled = false;
+        this.verificationToken = UUID.randomUUID().toString();
     }
 }
