@@ -6,7 +6,7 @@ const prod = {
 
 const dev = {
   url: {
-    API_BASE_URL: 'assistant'
+    API_BASE_URL: ''
   }
 }
 
