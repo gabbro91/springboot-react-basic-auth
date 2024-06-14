@@ -28,16 +28,16 @@ public class DatabaseInitializer implements CommandLineRunner {
             return;
         }
         USERS.forEach(userService::saveUser);
-        getBooks().forEach(bookService::saveBook);
+        //getBooks().forEach(bookService::saveBook);
         log.info("Database initialized");
     }
 
-    private List<Book> getBooks() {
-        return Arrays.stream(BOOKS_STR.split("\n"))
-                .map(bookInfoStr -> bookInfoStr.split(";"))
-                .map(bookInfoArr -> new Book(bookInfoArr[0], bookInfoArr[1],bookInfoArr[2], bookInfoArr[3]))
-                .collect(Collectors.toList());
-    }
+//    private List<Book> getBooks() {
+//        return Arrays.stream(BOOKS_STR.split("\n"))
+//                .map(bookInfoStr -> bookInfoStr.split(";"))
+//                .map(bookInfoArr -> new Book(bookInfoArr[0],bookInfoArr[1], bookInfoArr[2], Long.valueOf(bookInfoArr[3])))
+//                .collect(Collectors.toList());
+//    }
 
     private static final List<User> USERS = Arrays.asList(
             new User("admin", "admin", "Admin", "admin@mycompany.com", WebSecurityConfig.ADMIN),
@@ -46,6 +46,6 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     private static final String BOOKS_STR =
             """
-                    07/06/24;Assistant Response;conversation lenovo 2023;admin
+                   Assistant Response;conversation lenovo 2023;admin;1
                     """;
 }

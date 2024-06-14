@@ -23,7 +23,7 @@ public interface UserService {
 
     Optional<User> validUsernameAndPassword(String username, String password);
 
-    User updateUserRole(String username);
+    User updateUserRole(String username, String role);
 
     void verifyUser(String token);
 }

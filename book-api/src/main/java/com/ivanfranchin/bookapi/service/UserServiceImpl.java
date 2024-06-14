@@ -73,10 +73,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUserRole(String username) {
-        return null;
-    }
-
     public User updateUserRole(String username, String role) {
         User user = validateAndGetUserByUsername(username);
         user.setRole(role);

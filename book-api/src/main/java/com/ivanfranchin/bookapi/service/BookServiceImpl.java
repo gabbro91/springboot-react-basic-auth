@@ -19,15 +19,15 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findAllByOrderByTitle();
     }
 
-    @Override
-    public List<Book> getBooksContainingText(String text) {
-        return bookRepository.findByIsbnContainingOrTitleContainingIgnoreCaseOrderByTitle(text, text);
-    }
+//    @Override
+//    public List<Book> getBooksContainingText(String text) {
+//        return bookRepository.findByIsbnContainingOrTitleContainingIgnoreCaseOrderByTitle(text, text);
+//    }
 
     @Override
-    public Book validateAndGetBook(String isbn) {
-        return bookRepository.findById(isbn)
-                .orElseThrow(() -> new BookNotFoundException(String.format("Book with isbn %s not found", isbn)));
+    public Book validateAndGetBook(String id) {
+        return bookRepository.findById(id)
+                .orElseThrow(() -> new BookNotFoundException(String.format("Message with isbn %s not found", id)));
     }
 
     @Override

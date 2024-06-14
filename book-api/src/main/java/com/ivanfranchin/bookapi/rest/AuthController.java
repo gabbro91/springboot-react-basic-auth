@@ -1,13 +1,14 @@
 package com.ivanfranchin.bookapi.rest;
 
 import com.ivanfranchin.bookapi.exception.DuplicatedUserInfoException;
+import com.ivanfranchin.bookapi.model.Conversation;
 import com.ivanfranchin.bookapi.model.User;
-import com.ivanfranchin.bookapi.rest.dto.AuthResponse;
-import com.ivanfranchin.bookapi.rest.dto.LoginRequest;
-import com.ivanfranchin.bookapi.rest.dto.SignUpRequest;
+import com.ivanfranchin.bookapi.rest.dto.*;
 import com.ivanfranchin.bookapi.security.WebSecurityConfig;
 import com.ivanfranchin.bookapi.service.EmailService;
 import com.ivanfranchin.bookapi.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -55,6 +56,15 @@ public class AuthController {
         userService.verifyUser(token);
         return ResponseEntity.ok("User verified successfully");
     }
+
+//    @Operation(security = {@SecurityRequirement(name = "BASIC_AUTH_SECURITY_SCHEME")})
+//    @PutMapping("/{id}")
+//    public ConversationDto updateConversation(@PathVariable Long id, @Valid @RequestBody SignUpRequest signUpRequest) {
+//        Conversation conversation = conversationService.getConversationById(id)
+//                .orElseThrow(() -> new RuntimeException("Conversation not found"));
+//        conversation.setTopic(createConversationRequest.getTopic());
+//        return conversationMapper.toConversationDto(conversationService.saveConversation(conversation));
+//    }
 
     private User createUser(SignUpRequest signUpRequest) {
         User user = new User();

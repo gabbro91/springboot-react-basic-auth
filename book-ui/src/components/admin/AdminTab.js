@@ -2,11 +2,12 @@ import React from 'react'
 import { Tab } from 'semantic-ui-react'
 import UserTable from './UserTable'
 import BookTable from './BookTable'
+import ConversationTable from './ConversationTable'
 
 function AdminTab(props) {
   const { handleInputChange } = props
-  const { isUsersLoading, users, userUsernameSearch, handleDeleteUser, handleSearchUser } = props
-  const { isBooksLoading, books, bookIsbn, bookTitle, bookTextSearch, handleAddBook, handleDeleteBook, handleSearchBook } = props
+  const { isUsersLoading, users, userUsernameSearch, handleDeleteUser, handleRoleChange, handleSearchUser } = props
+  const { isBooksLoading, books, bookIsbn, bookTitle, bookTextSearch, handleAddBook, handleDeleteBook, handleSearchBook, conversations } = props
 
   const panes = [
     {
@@ -19,6 +20,7 @@ function AdminTab(props) {
             handleInputChange={handleInputChange}
             handleDeleteUser={handleDeleteUser}
             handleSearchUser={handleSearchUser}
+            handleRoleChange={handleRoleChange}
           />
         </Tab.Pane>
       )
@@ -30,6 +32,24 @@ function AdminTab(props) {
           <BookTable
             books={books}
             bookIsbn={bookIsbn}
+            bookTitle={bookTitle}
+            bookTextSearch={bookTextSearch}
+            handleInputChange={handleInputChange}
+            handleAddBook={handleAddBook}
+            handleDeleteBook={handleDeleteBook}
+            handleSearchBook={handleSearchBook}
+          />
+        </Tab.Pane>
+      )
+    },
+    {
+      menuItem: { key: 'conversation', icon: 'book', content: 'Conversations' },
+      render: () => (
+        <Tab.Pane>
+          <ConversationTable
+            conversations={conversations}
+            bookIsbn={bookIsbn}
+            books={books}
             bookTitle={bookTitle}
             bookTextSearch={bookTextSearch}
             handleInputChange={handleInputChange}

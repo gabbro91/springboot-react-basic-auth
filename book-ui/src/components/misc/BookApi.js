@@ -10,7 +10,9 @@ export const bookApi = {
   deleteUser,
   getBooks,
   deleteBook,
-  addBook
+  addBook,
+  updateUserRole,
+  getConversations
 }
 
 function authenticate(username, password) {
@@ -40,8 +42,21 @@ function getUsers(user, username) {
   })
 }
 
+function getConversations(user) {
+  const url = '/api/conversations'
+  return instance.get(url, {
+    headers: { 'Authorization': basicAuth(user) }
+  })
+}
+
 function deleteUser(user, username) {
   return instance.delete(`/api/users/${username}`, {
+    headers: { 'Authorization': basicAuth(user) }
+  })
+}
+
+function updateUserRole(user, username, role) {
+  return instance.put(`/api/users/${username}/${role}`, {
     headers: { 'Authorization': basicAuth(user) }
   })
 }

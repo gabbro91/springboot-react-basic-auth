@@ -16,6 +16,7 @@ function AdminPage() {
   const [isUsersLoading, setIsUsersLoading] = useState(false)
 
   const [books, setBooks] = useState([])
+  const [conversations, setConversations] = useState([])
   const [bookIsbn, setBookIsbn] = useState('')
   const [bookTitle, setBookTitle] = useState('')
   const [bookTextSearch, setBookTextSearch] = useState('')
@@ -24,6 +25,7 @@ function AdminPage() {
   useEffect(() => {
     handleGetUsers()
     handleGetBooks()
+    handleGetConversations()
   }, [])
 
   const handleInputChange = (e, { name, value }) => {
@@ -60,10 +62,10 @@ function AdminPage() {
     }
   }
 
-  const handleRoleChange = async (userId, newRole) => {
+  const handleRoleChange = async (username, newRole) => {
     try {
-      await bookApi.updateUserRole(user, userId, newRole)
-      setUsers(users.map(u => (u.id === userId ? { ...u, role: newRole } : u)))
+      await bookApi.updateUserRole(user, username, newRole)
+      //setUsers(users.map(u => (u.id === userId ? { ...u, role: newRole } : u)))
     } catch (error) {
       handleLogError(error)
     }
@@ -82,6 +84,17 @@ function AdminPage() {
     }
   }
 
+  const handleGetConversations = async () => {
+    try {
+      const response = await bookApi.getConversations(user)
+      setConversations(response.data)
+      console.log(conversations)
+    } catch (error) {
+      handleLogError(error)
+    } finally {
+    }
+  }
+
   const handleGetBooks = async () => {
     try {
       setIsBooksLoading(true)
@@ -93,6 +106,8 @@ function AdminPage() {
       setIsBooksLoading(false)
     }
   }
+
+  
 
   const handleDeleteBook = async (isbn) => {
     try {
@@ -144,9 +159,11 @@ function AdminPage() {
         users={users}
         userUsernameSearch={userUsernameSearch}
         handleDeleteUser={handleDeleteUser}
+        handleRoleChange={handleRoleChange}
         handleSearchUser={handleSearchUser}
         isBooksLoading={isBooksLoading}
         books={books}
+        conversations={conversations}
         bookIsbn={bookIsbn}
         bookTitle={bookTitle}
         bookTextSearch={bookTextSearch}

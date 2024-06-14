@@ -2,11 +2,13 @@ package com.ivanfranchin.bookapi.rest;
 
 import com.ivanfranchin.bookapi.mapper.UserMapper;
 import com.ivanfranchin.bookapi.model.User;
+import com.ivanfranchin.bookapi.rest.dto.CreateConversationRequest;
 import com.ivanfranchin.bookapi.rest.dto.UserDto;
 import com.ivanfranchin.bookapi.security.CustomUserDetails;
 import com.ivanfranchin.bookapi.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -53,9 +55,9 @@ public class UserController {
     }
 
     @Operation(security = {@SecurityRequirement(name = BASIC_AUTH_SECURITY_SCHEME)})
-    @PutMapping("/{username}")
-    public UserDto updateUser(@PathVariable String username) {
-        User user = userService.updateUserRole(username);
+    @PutMapping("/{username}/{role}")
+    public UserDto updateUser(@PathVariable String username, String role, @Valid @RequestBody CreateConversationRequest createConversationRequest) {
+        User user = userService.updateUserRole(username,role);
         return userMapper.toUserDto(user);
     }
 }

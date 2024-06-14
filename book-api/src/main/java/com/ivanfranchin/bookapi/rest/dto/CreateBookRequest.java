@@ -8,16 +8,18 @@ import lombok.Data;
 public class CreateBookRequest {
 
     @Schema(example = "9781849518260")
-    @NotBlank
-    private String isbn;
+    private long isbn;
 
     @Schema(example = "Spring Security 3.1")
     @NotBlank
     private String title;
 
-    @Schema(example = "Spring Security 3.1")
+    @Schema(example = "Some input")
     private String input;
 
-    @Schema(example = "Spring Security 3.1")
+    @Schema(example = "user@example.com")
     private String usermail;
+
+    @Schema(example = "1")
+    private Long conversation_UID;
 }

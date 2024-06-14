@@ -37,7 +37,7 @@ function UserTable({ users, userUsernameSearch, handleInputChange, handleDeleteU
           <Select
               options={roleOptions}
               value={roleOptions.find(option => option.value === user.role)}
-              onChange={(e, { value }) => handleRoleChange(user.id, value)}
+              onChange={(e, { value }) => handleRoleChange(user.username, value)}
               //disabled={user.username === 'admin'}
               />
         </Table.Row>

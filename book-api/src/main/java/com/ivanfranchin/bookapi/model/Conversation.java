@@ -5,24 +5,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "books")
-public class Book {
+@Table(name = "conversations")
+public class Conversation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long isbn;
+    private Long id;
 
-    private String title;
+    private String topic;
 
-    private String input;
+    private String timestamp;
 
-    private String usermail;
-
-    private Long conversation_UID;
-
+    private int conversation_uid;
 
 }

@@ -1,34 +1,45 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { Button, Form, Grid, Image, Input, Table } from 'semantic-ui-react'
 import BookForm from './BookForm'
 
-function BookTable({ books, bookIsbn, bookTitle, bookTextSearch, handleInputChange, handleAddBook, handleDeleteBook, handleSearchBook }) {
+function ConversationTable({ books, bookIsbn, bookTitle, bookTextSearch, handleInputChange, handleAddBook, handleDeleteBook, handleSearchBook, conversations }) {
+  const [selectedBooks, setSelectedBooks] = useState([]);
+  const [showBooksTable, setShowBooksTable] = useState(false);
+
+  const handleShowBooks = (conversationId) => {
+    const booksForConversation = books.filter(book => book.conversation_uid === conversationId);
+    console.log(booksForConversation)
+    setSelectedBooks(booksForConversation);
+    setShowBooksTable(true);
+  };
+
   let bookList
-  if (books.length === 0) {
-    bookList = (
-      <Table.Row key='no-book'>
-        <Table.Cell collapsing textAlign='center' colSpan='4'>No Query</Table.Cell>
+  if (showBooksTable) {
+    bookList = selectedBooks.map(book => (
+      <Table.Row key={book.id}>
+        <Table.Cell>{book.usermail}</Table.Cell>
+        <Table.Cell>{book.conversation_uid}</Table.Cell>
+        <Table.Cell>{book.title}</Table.Cell>
+        <Table.Cell>{book.input}</Table.Cell>
       </Table.Row>
-    )
+    ));
   } else {
-    bookList = books.map(book => {
+    bookList = conversations.map(conversations => {
       return (
-        <Table.Row key={book.isbn}>
+        <Table.Row key={conversations.id}>
           <Table.Cell collapsing>
             <Button
               circular
-              color='red'
+              color='green'
               size='small'
-              icon='trash'
-              onClick={() => handleDeleteBook(book.isbn)}
+              onClick={() => handleShowBooks(conversations.conversation_uid)}
             />
           </Table.Cell>
           <Table.Cell>
-          <Table.Cell>{book.usermail}</Table.Cell>
+          <Table.Cell>{conversations.usermail}</Table.Cell>
           </Table.Cell>
-          <Table.Cell>{book.conversation_uid}</Table.Cell>
-          <Table.Cell>{book.input}</Table.Cell>
-          <Table.Cell>{book.title}</Table.Cell>
+          <Table.Cell>{conversations.id}</Table.Cell>
+          <Table.Cell>{conversations.timestamp}</Table.Cell>
         </Table.Row>
       )
     })
@@ -63,10 +74,9 @@ function BookTable({ books, bookIsbn, bookTitle, bookTextSearch, handleInputChan
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell width={1}/>
-            <Table.HeaderCell width={1}>User</Table.HeaderCell>
+            <Table.HeaderCell width={1}>Id</Table.HeaderCell>
             <Table.HeaderCell width={2}>Conversation</Table.HeaderCell>
-            <Table.HeaderCell width={8}>Response</Table.HeaderCell>
-            <Table.HeaderCell width={8}>Input</Table.HeaderCell>
+            <Table.HeaderCell width={8}>Topic</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -77,4 +87,4 @@ function BookTable({ books, bookIsbn, bookTitle, bookTextSearch, handleInputChan
   )
 }
 
-export default BookTable
+export default ConversationTable

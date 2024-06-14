@@ -54,13 +54,13 @@ function UserPage() {
 
   return (
     <Container>
-      <BookList
+      {/* <BookList
         isBooksLoading={isBooksLoading}
         bookTextSearch={bookTextSearch}
         books={books}
         handleInputChange={handleInputChange}
         handleSearchBook={handleSearchBook}
-      />
+      /> */}
     </Container>
   )
 }

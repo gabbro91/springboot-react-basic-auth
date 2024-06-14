@@ -8,7 +8,7 @@ public interface BookService {
 
     List<Book> getBooks();
 
-    List<Book> getBooksContainingText(String text);
+    //List<Book> getBooksContainingText(String text);
 
     Book validateAndGetBook(String isbn);
 
