@@ -3,6 +3,7 @@ package com.ivanfranchin.bookapi.rest;
 import com.ivanfranchin.bookapi.mapper.UserMapper;
 import com.ivanfranchin.bookapi.model.User;
 import com.ivanfranchin.bookapi.rest.dto.CreateConversationRequest;
+import com.ivanfranchin.bookapi.rest.dto.SignUpRequest;
 import com.ivanfranchin.bookapi.rest.dto.UserDto;
 import com.ivanfranchin.bookapi.security.CustomUserDetails;
 import com.ivanfranchin.bookapi.service.UserService;
@@ -55,8 +56,9 @@ public class UserController {
     }
 
     @Operation(security = {@SecurityRequirement(name = BASIC_AUTH_SECURITY_SCHEME)})
-    @PutMapping("/{username}/{role}")
-    public UserDto updateUser(@PathVariable String username, String role, @Valid @RequestBody CreateConversationRequest createConversationRequest) {
+    @PutMapping("/{username}")
+    public UserDto updateUser(@PathVariable String username, @Valid @RequestBody SignUpRequest signUpRequest) {
+        String role = signUpRequest.getRole();
         User user = userService.updateUserRole(username,role);
         return userMapper.toUserDto(user);
     }

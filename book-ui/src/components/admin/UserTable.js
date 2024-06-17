@@ -4,8 +4,8 @@ import { Form, Button, Input, Table, Select, Icon } from 'semantic-ui-react'
 
 function UserTable({ users, userUsernameSearch, handleInputChange, handleDeleteUser, handleSearchUser, handleRoleChange }) {
   const roleOptions = [
-    { key: 'user', text: 'User', value: 'user' },
-    { key: 'admin', text: 'Admin', value: 'admin' }
+    { key: 'user', text: 'User', value: 'USER' },
+    { key: 'admin', text: 'Admin', value: 'ADMIN' }
   ]
   let userList
   if (users.length === 0) {
@@ -38,7 +38,7 @@ function UserTable({ users, userUsernameSearch, handleInputChange, handleDeleteU
               options={roleOptions}
               value={roleOptions.find(option => option.value === user.role)}
               onChange={(e, { value }) => handleRoleChange(user.username, value)}
-              //disabled={user.username === 'admin'}
+              disabled={user.username === 'admin'}
               />
         </Table.Row>
       )

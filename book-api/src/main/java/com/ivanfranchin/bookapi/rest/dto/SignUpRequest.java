@@ -9,18 +9,18 @@ import lombok.Data;
 public class SignUpRequest {
 
     @Schema(example = "user3")
-    @NotBlank
     private String username;
 
     @Schema(example = "user3")
-    @NotBlank
     private String password;
 
     @Schema(example = "User3")
-    @NotBlank
     private String name;
 
     @Schema(example = "user3@mycompany.com")
     @Email
     private String email;
+
+    @Schema(example = "user")
+    private String role;
 }

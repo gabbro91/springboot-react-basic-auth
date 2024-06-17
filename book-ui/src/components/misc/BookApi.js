@@ -56,7 +56,7 @@ function deleteUser(user, username) {
 }
 
 function updateUserRole(user, username, role) {
-  return instance.put(`/api/users/${username}/${role}`, {
+  return instance.put(`/api/users/${username}`, { role: role }, {
     headers: { 'Authorization': basicAuth(user) }
   })
 }

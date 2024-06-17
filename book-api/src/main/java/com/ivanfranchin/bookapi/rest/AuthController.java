@@ -1,6 +1,7 @@
 package com.ivanfranchin.bookapi.rest;
 
 import com.ivanfranchin.bookapi.exception.DuplicatedUserInfoException;
+import com.ivanfranchin.bookapi.mapper.UserMapperImpl;
 import com.ivanfranchin.bookapi.model.Conversation;
 import com.ivanfranchin.bookapi.model.User;
 import com.ivanfranchin.bookapi.rest.dto.*;
@@ -24,6 +25,7 @@ public class AuthController {
 
     private final UserService userService;
     private final EmailService emailService;
+    private final UserMapperImpl userMapperImpl;
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
@@ -57,14 +59,14 @@ public class AuthController {
         return ResponseEntity.ok("User verified successfully");
     }
 
-//    @Operation(security = {@SecurityRequirement(name = "BASIC_AUTH_SECURITY_SCHEME")})
-//    @PutMapping("/{id}")
-//    public ConversationDto updateConversation(@PathVariable Long id, @Valid @RequestBody SignUpRequest signUpRequest) {
-//        Conversation conversation = conversationService.getConversationById(id)
-//                .orElseThrow(() -> new RuntimeException("Conversation not found"));
-//        conversation.setTopic(createConversationRequest.getTopic());
-//        return conversationMapper.toConversationDto(conversationService.saveConversation(conversation));
-//    }
+    @Operation(security = {@SecurityRequirement(name = "BASIC_AUTH_SECURITY_SCHEME")})
+    @PutMapping("/{username}")
+    public UserDto updateUser(@PathVariable String username, String role, @Valid @RequestBody SignUpRequest signUpRequest) {
+        User user = userService.getUserByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Conversation not found"));
+        user.setRole(role);
+        return userMapperImpl.toUserDto(userService.saveUser(user));
+    }
 
     private User createUser(SignUpRequest signUpRequest) {
         User user = new User();
