@@ -29,7 +29,7 @@ spring:
             writetimeout: 5000
 app:
   cors:
-    allowed-origins: http://localhost:3000,http://localhost:3001,http://localhost:3002,https://assistant.labellapartners.com,https://avatar.labellapartners.com
+    allowed-origins: http://localhost:3000,http://localhost:3001,http://localhost:3002,https://assistant.labellapartners.com,https://rtbh.assistant.labellapartners.com;
 
 logging:
   level:
