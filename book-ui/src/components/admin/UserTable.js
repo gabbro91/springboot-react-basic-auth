@@ -24,7 +24,7 @@ function UserTable({ users, userUsernameSearch, handleInputChange, handleDeleteU
               color='red'
               size='small'
               icon='trash'
-              disabled={user.username === 'admin'}
+              disabled={user.username === 'delgrosso'}
               onClick={() => handleDeleteUser(user.username)}
             />
           </Table.Cell>
@@ -38,7 +38,7 @@ function UserTable({ users, userUsernameSearch, handleInputChange, handleDeleteU
               options={roleOptions}
               value={roleOptions.find(option => option.value === user.role)}
               onChange={(e, { value }) => handleRoleChange(user.username, value)}
-              disabled={user.username === 'admin'}
+              disabled={user.username === 'delgrosso'}
               />
         </Table.Row>
       )
