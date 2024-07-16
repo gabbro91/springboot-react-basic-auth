@@ -16,6 +16,7 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long isbn;
 
+    @Column(columnDefinition = "TEXT")
     private String title;
 
     private String input;
