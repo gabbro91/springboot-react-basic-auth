@@ -17,14 +17,24 @@ function ConversationTable({ books, bookIsbn, bookTitle, bookTextSearch, handleI
   if (showBooksTable) {
     bookList = selectedBooks.map(book => (
       <Table.Row key={book.id}>
-        <Table.Cell>{book.usermail}</Table.Cell>
         <Table.Cell>{book.conversation_uid}</Table.Cell>
+        <Table.Cell>{book.usermail}</Table.Cell>
         <Table.Cell>{book.title}</Table.Cell>
         <Table.Cell>{book.input}</Table.Cell>
       </Table.Row>
     ));
   } else {
-    bookList = conversations.map(conversations => {
+    const seenConversationIds = new Set();
+    bookList = conversations
+      .filter(conversation => {
+        if (seenConversationIds.has(conversation.conversation_uid)) {
+          return false;
+        } else {
+          seenConversationIds.add(conversation.conversation_uid);
+          return true;
+        }
+      })
+    .map(conversations => {
       return (
         <Table.Row key={conversations.id}>
           <Table.Cell collapsing>
@@ -36,7 +46,7 @@ function ConversationTable({ books, bookIsbn, bookTitle, bookTextSearch, handleI
             />
           </Table.Cell>
           <Table.Cell>
-          <Table.Cell>{conversations.usermail}</Table.Cell>
+          <Table.Cell>{conversations.topic}</Table.Cell>
           </Table.Cell>
           <Table.Cell>{conversations.id}</Table.Cell>
           <Table.Cell>{conversations.timestamp}</Table.Cell>
@@ -74,9 +84,9 @@ function ConversationTable({ books, bookIsbn, bookTitle, bookTextSearch, handleI
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell width={1}/>
-            <Table.HeaderCell width={1}>Id</Table.HeaderCell>
-            <Table.HeaderCell width={2}>Conversation</Table.HeaderCell>
-            <Table.HeaderCell width={8}>Topic</Table.HeaderCell>
+            <Table.HeaderCell width={1}>{showBooksTable? "User": "User"}</Table.HeaderCell>
+            <Table.HeaderCell width={2}>{showBooksTable? "Input": "Conversation"}</Table.HeaderCell>
+            <Table.HeaderCell width={8}>{showBooksTable? "Message": "Date"}</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>

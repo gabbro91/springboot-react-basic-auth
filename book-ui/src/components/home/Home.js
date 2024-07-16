@@ -53,15 +53,13 @@ function Home() {
             <Segment color='blue'>
               <Statistic>
                 <Statistic.Value><Icon name='book' color='grey' />{numberOfBooks}</Statistic.Value>
-                <Statistic.Label>Query</Statistic.Label>
+                <Statistic.Label>Messagge</Statistic.Label>
               </Statistic>
             </Segment>
           </Grid.Column>
         </Grid.Row>
       </Grid>
 
-      <Image src='https://react.semantic-ui.com/images/wireframe/media-paragraph.png' style={{ marginTop: '2em' }} />
-      <Image src='https://react.semantic-ui.com/images/wireframe/paragraph.png' style={{ marginTop: '2em' }} />
     </Container>
   )
 }
