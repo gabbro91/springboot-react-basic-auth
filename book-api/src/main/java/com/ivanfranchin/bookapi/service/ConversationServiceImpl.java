@@ -29,6 +29,16 @@ public class ConversationServiceImpl implements ConversationService {
     }
 
     @Override
+    public List<Conversation> getConversationsByCategory(String category) {
+        return conversationRepository.findByCategory(category);
+    }
+
+    @Override
+    public List<Conversation> getConversationsByTopicAndCategory(String topic, String category) {
+        return conversationRepository.findByTopicAndCategory(topic, category);
+    }
+
+    @Override
     public Conversation saveConversation(Conversation conversation) {
         return conversationRepository.save(conversation);
     }

@@ -23,7 +23,7 @@ public class Book {
 
     private String usermail;
 
-    private Long conversation_UID;
+    private Long conversationUid;
 
 
 }

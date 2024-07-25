@@ -21,5 +21,5 @@ public class CreateBookRequest {
     private String usermail;
 
     @Schema(example = "1")
-    private Long conversation_UID;
+    private Long conversationUid;
 }

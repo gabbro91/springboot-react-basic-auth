@@ -20,8 +20,14 @@ public class Conversation {
 
     private String topic;
 
+    private String title;
+
+    private String category;
+
     private String timestamp;
 
-    private int conversation_uid;
+    private int conversationUid;
+
+    private int id_assistant;
 
 }

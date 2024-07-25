@@ -12,4 +12,7 @@ public interface BookRepository extends JpaRepository<Book, String> {
     List<Book> findAllByOrderByTitle();
 
     //List<Book> findByIsbnContainingOrTitleContainingIgnoreCaseOrderByTitle(String isbn, String title);
+
+    List<Book> findByConversationUid(int conversationUid);
+
 }

@@ -1,6 +1,7 @@
 package com.ivanfranchin.bookapi.rest;
 
 import com.ivanfranchin.bookapi.mapper.ConversationMapper;
+import com.ivanfranchin.bookapi.model.Book;
 import com.ivanfranchin.bookapi.model.Conversation;
 import com.ivanfranchin.bookapi.rest.dto.ConversationDto;
 import com.ivanfranchin.bookapi.rest.dto.CreateConversationRequest;
@@ -45,11 +46,25 @@ public class ConversationController {
 
     @Operation(security = {@SecurityRequirement(name = "BASIC_AUTH_SECURITY_SCHEME")})
     @GetMapping
-    public List<ConversationDto> getAllConversations() {
-        return conversationService.getAllConversations().stream()
+    public List<ConversationDto> getConversations(
+            @RequestParam(value = "category", required = false) String category,
+            @RequestParam(value = "topic", required = false) String topic ){
+        List<Conversation> conversations = (category == null) ? conversationService.getAllConversations() : conversationService.getConversationsByTopicAndCategory(topic,category);
+
+        return conversations.stream()
                 .map(conversationMapper::toConversationDto)
                 .collect(Collectors.toList());
     }
+
+//    @Operation(security = {@SecurityRequirement(name = "BASIC_AUTH_SECURITY_SCHEME")})
+//    @GetMapping
+//    public List<ConversationDto> getConversationsByTopic(@RequestParam(value = "category", required = false) String category){
+//        List<Conversation> conversations = (category == null) ? conversationService.getAllConversations() : conversationService.getConversationsByCategory(category);
+//
+//        return conversations.stream()
+//                .map(conversationMapper::toConversationDto)
+//                .collect(Collectors.toList());
+//    }
 
     @Operation(security = {@SecurityRequirement(name = "BASIC_AUTH_SECURITY_SCHEME")})
     @PutMapping("/{id}")

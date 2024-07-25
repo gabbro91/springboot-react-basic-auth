@@ -35,9 +35,8 @@ public class BookController {
 
     @Operation(security = {@SecurityRequirement(name = BASIC_AUTH_SECURITY_SCHEME)})
     @GetMapping
-    public List<BookDto> getBooks(@RequestParam(value = "text", required = false) String text) {
-        //List<Book> books = (text == null) ? bookService.getBooks() : bookService.getBooksContainingText(text);
-        List<Book> books = bookService.getBooks();
+    public List<BookDto> getBooks(@RequestParam(value = "conversation_uid", required = false) Integer conversation_uid) {
+        List<Book> books = (conversation_uid == null) ? bookService.getBooks() : bookService.getBooksByConvUID(conversation_uid);
 
         return books.stream()
                 .map(bookMapper::toBookDto)

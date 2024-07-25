@@ -19,10 +19,10 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findAllByOrderByTitle();
     }
 
-//    @Override
-//    public List<Book> getBooksContainingText(String text) {
-//        return bookRepository.findByIsbnContainingOrTitleContainingIgnoreCaseOrderByTitle(text, text);
-//    }
+    @Override
+    public List<Book> getBooksByConvUID(int conversationUID) {
+        return bookRepository.findByConversationUid(conversationUID);
+    }
 
     @Override
     public Book validateAndGetBook(String id) {

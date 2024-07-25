@@ -11,11 +11,22 @@ public class CreateConversationRequest {
     @NotBlank
     private String topic;
 
+    @Schema(example = "Book Discussion on Spring Security")
+    @NotBlank
+    private String title;
+
+    @Schema(example = "Book")
+    @NotBlank
+    private String category;
+
+    @Schema(example = "1")
+    private int id_assistant;
+
     @Schema(example = "13/6/2024, 17:21:59")
     @NotBlank
     private String timestamp;
 
     @Schema(example = "1")
-    private int conversation_uid;
+    private int conversationUid;
 
 }

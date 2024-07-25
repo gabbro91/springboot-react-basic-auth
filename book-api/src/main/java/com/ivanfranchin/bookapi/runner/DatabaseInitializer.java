@@ -27,7 +27,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         if (!userService.getUsers().isEmpty()) {
             return;
         }
-        //USERS.forEach(userService::saveUser);
+        USERS.forEach(userService::saveUser);
         //getBooks().forEach(bookService::saveBook);
         log.info("Database initialized");
     }

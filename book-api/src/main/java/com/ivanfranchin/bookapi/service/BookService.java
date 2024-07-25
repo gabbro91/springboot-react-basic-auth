@@ -10,9 +10,12 @@ public interface BookService {
 
     //List<Book> getBooksContainingText(String text);
 
+    List<Book> getBooksByConvUID(int conversationUID);
+
     Book validateAndGetBook(String isbn);
 
     Book saveBook(Book book);
 
     void deleteBook(Book book);
+
 }

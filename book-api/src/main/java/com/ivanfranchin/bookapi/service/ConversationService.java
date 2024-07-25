@@ -11,6 +11,10 @@ public interface ConversationService {
 
     List<Conversation> getAllConversations();
 
+    List<Conversation> getConversationsByCategory(String category);
+
+    List<Conversation> getConversationsByTopicAndCategory(String topic, String category);
+
     Conversation saveConversation(Conversation conversation);
 
     void deleteConversation(Long id);

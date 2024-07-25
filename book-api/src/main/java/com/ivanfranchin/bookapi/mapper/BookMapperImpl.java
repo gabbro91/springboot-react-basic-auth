@@ -20,7 +20,7 @@ public class BookMapperImpl implements BookMapper {
                 createBookRequest.getTitle(),
                 createBookRequest.getInput(),
                 createBookRequest.getUsermail(),
-                createBookRequest.getConversation_UID()
+                createBookRequest.getConversationUid()
 
         );
     }
@@ -35,7 +35,7 @@ public class BookMapperImpl implements BookMapper {
                 book.getTitle(),
                 book.getInput(),
                 book.getUsermail(),
-                book.getConversation_UID()
+                book.getConversationUid()
         );
     }
 }
