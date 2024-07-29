@@ -49,7 +49,7 @@ public class ConversationController {
     public List<ConversationDto> getConversations(
             @RequestParam(value = "category", required = false) String category,
             @RequestParam(value = "topic", required = false) String topic ){
-        List<Conversation> conversations = (category == null) ? conversationService.getAllConversations() : conversationService.getConversationsByTopicAndCategory(topic,category);
+        List<Conversation> conversations = (category == null) ? conversationService.getConversationsByTopic(topic) : conversationService.getConversationsByTopicAndCategory(topic,category);
 
         return conversations.stream()
                 .map(conversationMapper::toConversationDto)

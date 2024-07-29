@@ -13,6 +13,8 @@ public interface ConversationService {
 
     List<Conversation> getConversationsByCategory(String category);
 
+    List<Conversation> getConversationsByTopic(String topic);
+
     List<Conversation> getConversationsByTopicAndCategory(String topic, String category);
 
     Conversation saveConversation(Conversation conversation);

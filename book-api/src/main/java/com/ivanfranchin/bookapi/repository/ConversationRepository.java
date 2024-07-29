@@ -9,4 +9,6 @@ import java.util.List;
 public interface ConversationRepository extends JpaRepository<Conversation, Long> {
     List<Conversation> findByCategory(String category);
     List<Conversation> findByTopicAndCategory(String topic,String category);
+
+    List<Conversation> findByTopic(String topic);
 }
