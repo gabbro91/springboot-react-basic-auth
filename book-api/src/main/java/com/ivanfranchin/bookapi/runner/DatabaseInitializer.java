@@ -27,7 +27,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         if (!userService.getUsers().isEmpty()) {
             return;
         }
-        //USERS.forEach(userService::saveUser);
+        USERS.forEach(userService::saveUser);
         //getBooks().forEach(bookService::saveBook);
         log.info("Database initialized");
     }
@@ -40,8 +40,11 @@ public class DatabaseInitializer implements CommandLineRunner {
 //    }
 
     private static final List<User> USERS = Arrays.asList(
-            new User("admin", "admin", "Admin", "admin@mycompany.com", WebSecurityConfig.ADMIN),
-            new User("user", "user", "User", "user@mycompany.com", WebSecurityConfig.USER)
+            new User("delgrosso", "$Labellapartners$", "Marco Del Grosso", "marco.delgrosso@labellapartners.com", WebSecurityConfig.ADMIN),
+            new User("apponi", "$Labellapartners$", "Francesca Apponi", "francesca.apponi@labellapartners.com", WebSecurityConfig.ADMIN),
+             new User("laico", "$Labellapartners$", "Martina Laico", "martina.laico@labellapartners.com", WebSecurityConfig.ADMIN),
+            new User("labella", "$Labellapartners$", "Agostino La Bella", "ago.labella@labellapartners.com", WebSecurityConfig.ADMIN),
+         new User("brunozzi", "$Labellapartners$", "Gabriele Tini Brunozzi", "gabriele.brunozzi@labellapartners.com", WebSecurityConfig.ADMIN)
     );
 
     private static final String BOOKS_STR =
