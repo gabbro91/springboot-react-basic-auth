@@ -7,8 +7,8 @@ import ConversationTable from './ConversationTable'
 function AdminTab(props) {
   const { handleInputChange } = props
   const { isUsersLoading, users, userUsernameSearch, handleDeleteUser, handleRoleChange, handleSearchUser } = props
-  const { isBooksLoading, books, bookIsbn, bookTitle, bookTextSearch, handleAddBook, handleDeleteBook, handleSearchBook, conversations } = props
-
+  const { isBooksLoading, books, bookIsbn, bookTitle, bookTextSearch, handleAddBook, handleDeleteBook, handleSearchBook, conversations, allConversations } = props
+  
   const panes = [
     {
       menuItem: { key: 'users', icon: 'users', content: 'Users' },
@@ -21,24 +21,7 @@ function AdminTab(props) {
             handleDeleteUser={handleDeleteUser}
             handleSearchUser={handleSearchUser}
             handleRoleChange={handleRoleChange}
-          />
-        </Tab.Pane>
-      )
-    },
-    {
-      menuItem: { key: 'query', icon: '', content: 'Assistants' },
-      render: () => (
-        <Tab.Pane loading={isBooksLoading}>
-          <BookTable
-            books={books}
-            bookIsbn={bookIsbn}
-            bookTitle={bookTitle}
-            bookTextSearch={bookTextSearch}
-            handleInputChange={handleInputChange}
-            handleAddBook={handleAddBook}
-            handleDeleteBook={handleDeleteBook}
-            handleSearchBook={handleSearchBook}
-          />
+            />
         </Tab.Pane>
       )
     },
@@ -48,6 +31,7 @@ function AdminTab(props) {
         <Tab.Pane>
           <ConversationTable
             conversations={conversations}
+            allConversations={allConversations}
             bookIsbn={bookIsbn}
             books={books}
             bookTitle={bookTitle}
@@ -57,6 +41,14 @@ function AdminTab(props) {
             handleDeleteBook={handleDeleteBook}
             handleSearchBook={handleSearchBook}
           />
+        </Tab.Pane>
+      )
+    },
+    {
+      menuItem: { key: 'query', icon: '', content: 'Assistants' },
+      render: () => (
+        <Tab.Pane loading={isBooksLoading}>
+         
         </Tab.Pane>
       )
     }

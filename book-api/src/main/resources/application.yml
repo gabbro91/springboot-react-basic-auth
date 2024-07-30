@@ -3,7 +3,7 @@ spring:
     name: book-api
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   datasource:
     url: jdbc:postgresql://localhost:5432/assistant
     username: postgres
@@ -29,7 +29,7 @@ spring:
             writetimeout: 5000
 app:
   cors:
-    allowed-origins: http://localhost:3000,http://localhost:3001,http://localhost:3002,https://assistant.labellapartners.com,https://rtbh.assistant.labellapartners.com
+    allowed-origins: http://localhost:3000,https://172.30.128.118,http://localhost:3001,http://localhost:3002,https://assistant.labellapartners.com,https://rtbh.assistant.labellapartners.com
 
 logging:
   level:

@@ -17,6 +17,7 @@ function AdminPage() {
 
   const [books, setBooks] = useState([])
   const [conversations, setConversations] = useState([])
+  const [allConversations, setAllConversations] = useState([])
   const [bookIsbn, setBookIsbn] = useState('')
   const [bookTitle, setBookTitle] = useState('')
   const [bookTextSearch, setBookTextSearch] = useState('')
@@ -26,6 +27,7 @@ function AdminPage() {
     handleGetUsers()
     handleGetBooks()
     handleGetConversations()
+    handleGetAllConversations()
   }, [])
 
   const handleInputChange = (e, { name, value }) => {
@@ -94,6 +96,18 @@ function AdminPage() {
     } finally {
     }
   }
+
+  const handleGetAllConversations = async () => {
+    try {
+      const response = await bookApi.getAllConversations(user)
+      setAllConversations(response.data)
+      console.log(conversations)
+    } catch (error) {
+      handleLogError(error)
+    } finally {
+    }
+  }
+  
 
   const handleGetBooks = async () => {
     try {
@@ -164,6 +178,7 @@ function AdminPage() {
         isBooksLoading={isBooksLoading}
         books={books}
         conversations={conversations}
+        allConversations={allConversations}
         bookIsbn={bookIsbn}
         bookTitle={bookTitle}
         bookTextSearch={bookTextSearch}

@@ -14,5 +14,6 @@ public class ConversationDto {
     private String timestamp;
     private int conversation_uid;
     private int id_assistant;
+    private long conversationCount;
 
 }
