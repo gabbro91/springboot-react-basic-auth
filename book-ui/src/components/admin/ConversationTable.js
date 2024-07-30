@@ -1,26 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form, Grid, Icon, Image, Input, Table } from "semantic-ui-react";
 import BookForm from "./BookForm";
-import {
-  MainContainer,
-  ChatContainer,
-  MessageList,
-  Message,
-  MessageInput,
-  Sidebar,
-  ConversationHeader,
-  TypingIndicator,
-  MessageSeparator,
-  ConversationList,
-  Conversation,
-  Avatar,
-  ArrowButton,
-  AddUserButton,
-  InfoButton,
-  VoiceCallButton,
-  VideoCallButton,
-  AvatarGroup,
-} from "@chatscope/chat-ui-kit-react";
 
 function ConversationTable({
   books,
@@ -120,6 +100,21 @@ function ConversationTable({
     // Trova l'ultima conversazione basata sul timestamp
     const lastConversation = filteredConversations[filteredConversations.length-1].timestamp 
     return lastConversation // Restituisci "N/A" se non ci sono conversazioni
+  };
+
+  const getLenghtForTopic = (topic) => {
+    const seenUids = new Set();
+    const filteredConversations = conversations.filter(
+      (conversation) => {
+        if (conversation.topic === topic && !seenUids.has(conversation.conversation_uid)) {
+          seenUids.add(conversation.conversation_uid);
+          return true;
+        }
+        return false;
+      }
+    );
+    
+    return filteredConversations.length;
   };
 
   const transformAndSetMessages = (data) => {
@@ -256,7 +251,7 @@ function ConversationTable({
             {showBooksTable ? selectedBooks[0].topic : selected[0].usermail}
           </Table.Cell>
           <Table.Cell >
-          {showBooksTable ? num : selected[0].conversation_uid}
+          {showBooksTable ? getLenghtForTopic(selectedBooks[0].topic) : selected[0].conversation_uid}
           </Table.Cell>
           <Table.Cell >
           {showBooksTable ? selectedBooks[selectedBooks.length-1].timestamp : selected[0].title}
