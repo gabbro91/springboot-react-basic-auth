@@ -112,6 +112,15 @@ function ConversationTable({
       ))}
     </div>
   );
+  const getLastTimestampForTopic = (topic) => {
+    // Filtra le conversazioni per il topic specificato
+    const filteredConversations = conversations.filter(
+      (conversation) => conversation.topic === topic
+    );
+    // Trova l'ultima conversazione basata sul timestamp
+    const lastConversation = filteredConversations[filteredConversations.length-1].timestamp 
+    return lastConversation // Restituisci "N/A" se non ci sono conversazioni
+  };
 
   const transformAndSetMessages = (data) => {
     const transformedArray = data.flatMap((obj) => [
@@ -145,13 +154,14 @@ function ConversationTable({
   let bookList;
 
   if (mainTable) {
+    console.log("conv",conversations)
     bookList = allConversations.map((conversation) => (
       <Table.Row key={conversation.id}>
         <Table.Cell onClick={() => handleShowConversations(conversation.user)}>
           {conversation.user}
         </Table.Cell>
         <Table.Cell>{conversation.conversationCount}</Table.Cell>
-        <Table.Cell>{conversation.timestamp}</Table.Cell>
+        <Table.Cell>{getLastTimestampForTopic(conversation.user)}</Table.Cell>
       </Table.Row>
     ));
   } else if (showBooksTable) {
