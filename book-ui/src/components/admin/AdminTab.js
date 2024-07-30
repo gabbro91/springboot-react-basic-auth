@@ -44,14 +44,14 @@ function AdminTab(props) {
         </Tab.Pane>
       )
     },
-    {
-      menuItem: { key: 'query', icon: '', content: 'Assistants' },
-      render: () => (
-        <Tab.Pane loading={isBooksLoading}>
+    // {
+    //   menuItem: { key: 'query', icon: '', content: 'Assistants' },
+    //   render: () => (
+    //     <Tab.Pane loading={isBooksLoading}>
          
-        </Tab.Pane>
-      )
-    }
+    //     </Tab.Pane>
+    //   )
+    // }
   ]
 
   return (

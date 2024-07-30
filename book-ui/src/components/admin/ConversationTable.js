@@ -6,7 +6,6 @@ function ConversationTable({
   books,
   bookIsbn,
   bookTitle,
-  bookTextSearch,
   handleInputChange,
   handleAddBook,
   handleDeleteBook,
@@ -19,9 +18,12 @@ function ConversationTable({
   const [showChatTable, setShowChatTable] = useState(false);
   const [selected, setSelected] = useState("");
   const [mex, setMex] = useState([]);
-  const [num, setNum] = useState("");
+  const [time, setTime] = useState("");
   const [userConv, setUserConv] = useState([]);
   const [mainTable, setMainTable] = useState(true);
+  const [bookTextSearch, setBookTextSearch] = useState(true);
+  const [filteredConversations, setFilteredConversations] = useState(allConversations);
+
 
   const handleShowBooks = (conversationId) => {
     const booksForConversation = books.filter(
@@ -35,6 +37,8 @@ function ConversationTable({
     console.log("selected-book",booksForConversation);
 
   };
+
+
 
   const handleShowConversations = (topic) => {
     const ConversationByUser = conversations.filter(
@@ -92,6 +96,14 @@ function ConversationTable({
       ))}
     </div>
   );
+
+  const filterConversations = (searchTerm) => {
+    const filtered = allConversations.filter(conversation =>
+      conversation.user.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredConversations(filtered);
+  };
+
   const getLastTimestampForTopic = (topic) => {
     // Filtra le conversazioni per il topic specificato
     const filteredConversations = conversations.filter(
@@ -115,6 +127,13 @@ function ConversationTable({
     );
     
     return filteredConversations.length;
+  };
+
+  const handleInputChanged= (e) => {
+    const { name, value } = e.target;
+      filterConversations(value);
+      setBookTextSearch(value);
+      // Gestisci altri campi di input se necessario
   };
 
   const transformAndSetMessages = (data) => {
@@ -150,7 +169,7 @@ function ConversationTable({
 
   if (mainTable) {
     console.log("conv",conversations)
-    bookList = allConversations.map((conversation) => (
+    bookList = filteredConversations.map((conversation) => (
       <Table.Row key={conversation.id}>
         <Table.Cell onClick={() => handleShowConversations(conversation.user)}>
           {conversation.user}
@@ -180,7 +199,7 @@ function ConversationTable({
             {showBooksTable ? book.timestamp : book.input}
           </Table.Cell>
           <Table.Cell>
-            {showBooksTable ? book.timestamp : book.input}
+            {showBooksTable ? "" : book.input}
           </Table.Cell>
         </Table.Row>
       ));
@@ -189,7 +208,7 @@ function ConversationTable({
   return (
     <>
       <Grid stackable divided>
-        <Grid.Row columns="2">
+        <Grid.Row columns="1">
           <Grid.Column width="5">
             <Form onSubmit={handleSearchBook}>
               <Input
@@ -197,18 +216,18 @@ function ConversationTable({
                 name="bookTextSearch"
                 placeholder="Search by User"
                 value={bookTextSearch}
-                onChange={handleInputChange}
+                onChange={handleInputChanged}
               />
             </Form>
           </Grid.Column>
-          <Grid.Column>
+          {/* <Grid.Column>
             <BookForm
               bookIsbn={bookIsbn}
               bookTitle={bookTitle}
               handleInputChange={handleInputChange}
               handleAddBook={handleAddBook}
             />
-          </Grid.Column>
+          </Grid.Column> */}
         </Grid.Row>
         {!mainTable && (
           <Table style={{marginBottom:'50px'}} compact striped selectable>
@@ -257,7 +276,7 @@ function ConversationTable({
           {showBooksTable ? selectedBooks[selectedBooks.length-1].timestamp : selected[0].title}
           </Table.Cell>
           <Table.Cell >
-          {showBooksTable ? "" : selectedBooks[selectedBooks.length-1].timestamp}
+          {showBooksTable ? "" : time}
           </Table.Cell>
           <Table.Cell >
           {showBooksTable ? "" : selected.length}
