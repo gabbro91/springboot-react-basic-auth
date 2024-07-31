@@ -25,7 +25,7 @@ function ConversationTable({
   const [filteredConversations, setFilteredConversations] = useState(allConversations);
 
 
-  const handleShowBooks = (conversationId) => {
+  const handleShowBooks = (conversationId, time) => {
     const booksForConversation = books.filter(
       (book) => book.conversation_uid === conversationId
     );
@@ -34,8 +34,7 @@ function ConversationTable({
     setShowBooksTable(false);
     setShowChatTable(true);
     transformAndSetMessages(booksForConversation);
-    console.log("selected-book",booksForConversation);
-
+    setTime(time);
   };
 
 
@@ -191,7 +190,7 @@ function ConversationTable({
       })
       .map((book) => (
         <Table.Row key={book.id}>
-          <Table.Cell onClick={() => handleShowBooks(book.conversation_uid)}>
+          <Table.Cell onClick={() => handleShowBooks(book.conversation_uid, book.timestamp)}>
             {showBooksTable ? book.conversation_uid : book.conversation_uid}
           </Table.Cell>
           <Table.Cell>{showBooksTable ? book.title : book.title}</Table.Cell>
