@@ -19,9 +19,10 @@ function ConversationTable({
   const [selected, setSelected] = useState("");
   const [mex, setMex] = useState([]);
   const [time, setTime] = useState("");
+  const [query, setQueries] = useState("");
   const [userConv, setUserConv] = useState([]);
   const [mainTable, setMainTable] = useState(true);
-  const [bookTextSearch, setBookTextSearch] = useState(true);
+  const [bookTextSearch, setBookTextSearch] = useState("");
   const [filteredConversations, setFilteredConversations] = useState(allConversations);
 
 
@@ -43,8 +44,10 @@ function ConversationTable({
     const ConversationByUser = conversations.filter(
       (conversation) => conversation.topic === topic
     );
+    console.log("conv-user",ConversationByUser)
     setSelectedBooks(ConversationByUser);
     setUserConv(ConversationByUser);
+    setQueries(ConversationByUser.length-1)
     setShowBooksTable(true);
     setMainTable(false);
   };
@@ -275,7 +278,7 @@ function ConversationTable({
           {showBooksTable ? selectedBooks[selectedBooks.length-1].timestamp : selected[0].title}
           </Table.Cell>
           <Table.Cell >
-          {showBooksTable ? "" : time}
+          {showBooksTable ? query : time}
           </Table.Cell>
           <Table.Cell >
           {showBooksTable ? "" : selected.length}
