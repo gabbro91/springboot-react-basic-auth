@@ -33,7 +33,7 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/users/me").hasAnyAuthority(ADMIN, USER)
                         .requestMatchers("/api/books", "/api/books/**").hasAuthority(ADMIN)
                         .requestMatchers("/api/users", "/api/users/**").hasAuthority(ADMIN)
-                        .requestMatchers("/api/conversations", "/api/conversations**").hasAuthority(ADMIN)
+                        .requestMatchers("/api/conversations", "/api/conversations**").hasAnyAuthority(ADMIN, USER)
                         .requestMatchers("/public/**", "/auth/**").permitAll()
                         .requestMatchers("/", "/error", "/csrf", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated())
