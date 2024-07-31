@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Button, Form, Grid, Icon, Image, Input, Table } from "semantic-ui-react";
+import {
+  Button,
+  Form,
+  Grid,
+  Icon,
+  Image,
+  Input,
+  Table,
+} from "semantic-ui-react";
 import BookForm from "./BookForm";
 
 function ConversationTable({
@@ -11,7 +19,7 @@ function ConversationTable({
   handleDeleteBook,
   handleSearchBook,
   conversations,
-  allConversations
+  allConversations,
 }) {
   const [selectedBooks, setSelectedBooks] = useState([]);
   const [showBooksTable, setShowBooksTable] = useState(false);
@@ -23,8 +31,8 @@ function ConversationTable({
   const [userConv, setUserConv] = useState([]);
   const [mainTable, setMainTable] = useState(true);
   const [bookTextSearch, setBookTextSearch] = useState("");
-  const [filteredConversations, setFilteredConversations] = useState(allConversations);
-
+  const [filteredConversations, setFilteredConversations] =
+    useState(allConversations);
 
   const handleShowBooks = (conversationId, time) => {
     const booksForConversation = books.filter(
@@ -38,35 +46,38 @@ function ConversationTable({
     setTime(time);
   };
 
-
-
   const handleShowConversations = (topic) => {
     const ConversationByUser = conversations.filter(
       (conversation) => conversation.topic === topic
     );
-    console.log("conv-user",ConversationByUser)
+    console.log("conv-user", ConversationByUser);
     setSelectedBooks(ConversationByUser);
     setUserConv(ConversationByUser);
-    setQueries(ConversationByUser.length-1)
+    setQueries(ConversationByUser.length - 1);
     setShowBooksTable(true);
     setMainTable(false);
   };
 
   const handleBackClick = () => {
-    setMainTable(true);
-    setShowBooksTable(false);
-    setShowChatTable(false);
+    if (showBooksTable) {
+      setMainTable(true);
+      setShowBooksTable(false);
+    } else if (showChatTable) {
+      setShowChatTable(false);
+      setShowBooksTable(true);
+      setMainTable(false);
+    }
   };
 
   const renderMessages = () => (
     <div style={{ padding: "10px" }}>
-      <Icon name="arrow left"  style={{ color: '#00BFFF' }}/>
-          <span
-            style={{ cursor: "pointer", color: '#00BFFF' }}
-            onClick={() => handleBackClick()}
-          >
-            Back
-          </span>
+      <Icon name="arrow left" style={{ color: "#00BFFF" }} />
+      <span
+        style={{ cursor: "pointer", color: "#00BFFF" }}
+        onClick={() => handleBackClick()}
+      >
+        Back
+      </span>
       {selectedBooks.map((msg, index) => (
         <div key={index} style={{ marginBottom: "10px" }}>
           <div style={{ textAlign: "right", marginBottom: "5px" }}>
@@ -100,7 +111,7 @@ function ConversationTable({
   );
 
   const filterConversations = (searchTerm) => {
-    const filtered = allConversations.filter(conversation =>
+    const filtered = allConversations.filter((conversation) =>
       conversation.user.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredConversations(filtered);
@@ -112,30 +123,32 @@ function ConversationTable({
       (conversation) => conversation.topic === topic
     );
     // Trova l'ultima conversazione basata sul timestamp
-    const lastConversation = filteredConversations[filteredConversations.length-1].timestamp 
-    return lastConversation // Restituisci "N/A" se non ci sono conversazioni
+    const lastConversation =
+      filteredConversations[filteredConversations.length - 1].timestamp;
+    return lastConversation; // Restituisci "N/A" se non ci sono conversazioni
   };
 
   const getLenghtForTopic = (topic) => {
     const seenUids = new Set();
-    const filteredConversations = conversations.filter(
-      (conversation) => {
-        if (conversation.topic === topic && !seenUids.has(conversation.conversation_uid)) {
-          seenUids.add(conversation.conversation_uid);
-          return true;
-        }
-        return false;
+    const filteredConversations = conversations.filter((conversation) => {
+      if (
+        conversation.topic === topic &&
+        !seenUids.has(conversation.conversation_uid)
+      ) {
+        seenUids.add(conversation.conversation_uid);
+        return true;
       }
-    );
-    
+      return false;
+    });
+
     return filteredConversations.length;
   };
 
-  const handleInputChanged= (e) => {
+  const handleInputChanged = (e) => {
     const { name, value } = e.target;
-      filterConversations(value);
-      setBookTextSearch(value);
-      // Gestisci altri campi di input se necessario
+    filterConversations(value);
+    setBookTextSearch(value);
+    // Gestisci altri campi di input se necessario
   };
 
   const transformAndSetMessages = (data) => {
@@ -159,8 +172,7 @@ function ConversationTable({
             sender: "Assistant",
             direction: "incoming",
             position: "single",
-          }
-          
+          },
         },
       },
     ]);
@@ -170,7 +182,7 @@ function ConversationTable({
   let bookList;
 
   if (mainTable) {
-    console.log("conv",conversations)
+    console.log("conv", conversations);
     bookList = filteredConversations.map((conversation) => (
       <Table.Row key={conversation.id}>
         <Table.Cell onClick={() => handleShowConversations(conversation.user)}>
@@ -182,7 +194,7 @@ function ConversationTable({
     ));
   } else if (showBooksTable) {
     const seenConversationIds = new Set();
-    bookList = selectedBooks
+    bookList = userConv
       .filter((conversation) => {
         if (seenConversationIds.has(conversation.conversation_uid)) {
           return false;
@@ -193,19 +205,21 @@ function ConversationTable({
       })
       .map((book) => (
         <Table.Row key={book.id}>
-          <Table.Cell onClick={() => handleShowBooks(book.conversation_uid, book.timestamp)}>
+          <Table.Cell
+            onClick={() =>
+              handleShowBooks(book.conversation_uid, book.timestamp)
+            }
+          >
             {showBooksTable ? book.conversation_uid : book.conversation_uid}
           </Table.Cell>
           <Table.Cell>{showBooksTable ? book.title : book.title}</Table.Cell>
           <Table.Cell>
             {showBooksTable ? book.timestamp : book.input}
           </Table.Cell>
-          <Table.Cell>
-            {showBooksTable ? "" : book.input}
-          </Table.Cell>
+          <Table.Cell>{showBooksTable ? "" : book.input}</Table.Cell>
         </Table.Row>
       ));
-  } 
+  }
 
   return (
     <>
@@ -232,7 +246,7 @@ function ConversationTable({
           </Grid.Column> */}
         </Grid.Row>
         {!mainTable && (
-          <Table style={{marginBottom:'50px'}} compact striped selectable>
+          <Table style={{ marginBottom: "50px" }} compact striped selectable>
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell
@@ -268,22 +282,21 @@ function ConversationTable({
               </Table.Row>
             </Table.Header>
             <Table.Body>
-            <Table.Cell >
-            {showBooksTable ? selectedBooks[0].topic : selected[0].usermail}
-          </Table.Cell>
-          <Table.Cell >
-          {showBooksTable ? getLenghtForTopic(selectedBooks[0].topic) : selected[0].conversation_uid}
-          </Table.Cell>
-          <Table.Cell >
-          {showBooksTable ? selectedBooks[selectedBooks.length-1].timestamp : selected[0].title}
-          </Table.Cell>
-          <Table.Cell >
-          {showBooksTable ? query : time}
-          </Table.Cell>
-          <Table.Cell >
-          {showBooksTable ? "" : selected.length}
-          </Table.Cell>
-          
+              <Table.Cell>
+                {showBooksTable ? userConv[0].topic : selected[0].usermail}
+              </Table.Cell>
+              <Table.Cell>
+                {showBooksTable
+                  ? getLenghtForTopic(userConv[0].topic)
+                  : selected[0].conversation_uid}
+              </Table.Cell>
+              <Table.Cell>
+                {showBooksTable
+                  ? userConv[userConv.length - 1].timestamp
+                  : selected[0].title}
+              </Table.Cell>
+              <Table.Cell>{showBooksTable ? query : time}</Table.Cell>
+              <Table.Cell>{showBooksTable ? "" : selected.length}</Table.Cell>
             </Table.Body>
           </Table>
         )}
@@ -291,15 +304,19 @@ function ConversationTable({
       {showChatTable && renderMessages()}
 
       {!showChatTable && (
-         <><div style={{ marginBottom: "10px" }}>
-          <Icon name="arrow left"  style={{ color: '#00BFFF' }}/>
-          <span
-            style={{ cursor: "pointer", color: '#00BFFF' }}
-            onClick={() => handleBackClick()}
-          >
-            Back
-          </span>
-        </div><Table compact striped selectable>
+        <>
+          {!mainTable && (
+            <div style={{ marginBottom: "10px" }}>
+              <Icon name="arrow left" style={{ color: "#00BFFF" }} />
+              <span
+                style={{ cursor: "pointer", color: "#00BFFF" }}
+                onClick={() => handleBackClick()}
+              >
+                Back
+              </span>
+            </div>
+          )}
+          <Table compact striped selectable>
             <Table.Header>
               <Table.Row>
                 <Table.HeaderCell width={4}>
@@ -318,7 +335,7 @@ function ConversationTable({
             </Table.Header>
             <Table.Body>{bookList}</Table.Body>
           </Table>
-          </>
+        </>
       )}
     </>
   );
