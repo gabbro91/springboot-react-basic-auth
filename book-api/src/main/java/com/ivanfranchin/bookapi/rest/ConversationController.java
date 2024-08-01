@@ -49,9 +49,9 @@ public class ConversationController {
     }
 
     @Operation(security = {@SecurityRequirement(name = "BASIC_AUTH_SECURITY_SCHEME")})
-    @PutMapping("/disable/{id}")
-    public void disableConversation(@PathVariable Long id) {
-        conversationService.disableConversation(id);
+    @PutMapping("/disable/{conversationUid}")
+    public void disableConversations(@PathVariable int conversationUid) {
+        conversationService.disableConversation(conversationUid);
     }
 
 
@@ -127,14 +127,13 @@ public class ConversationController {
 //                .collect(Collectors.toList());
 //    }
 
-    @Operation(security = {@SecurityRequirement(name = "BASIC_AUTH_SECURITY_SCHEME")})
-    @PutMapping("/{id}")
-    public ConversationDto updateConversation(@PathVariable Long id, @Valid @RequestBody CreateConversationRequest createConversationRequest) {
-        Conversation conversation = conversationService.getConversationById(id)
-                .orElseThrow(() -> new RuntimeException("Conversation not found"));
-        conversation.setTopic(createConversationRequest.getTopic());
-        return conversationMapper.toConversationDto(conversationService.saveConversation(conversation));
-    }
+//    @Operation(security = {@SecurityRequirement(name = "BASIC_AUTH_SECURITY_SCHEME")})
+//    @PutMapping("/{id}")
+//    public ConversationDto updateConversation(@PathVariable int id, @Valid @RequestBody CreateConversationRequest createConversationRequest) {
+//        Conversation conversation = conversationService.getConversationsByConversationUid(id);
+//        conversation.setTopic(createConversationRequest.getTopic());
+//        return conversationMapper.toConversationDto(conversationService.saveConversation(conversation));
+//    }
 
     @Operation(security = {@SecurityRequirement(name = "BASIC_AUTH_SECURITY_SCHEME")})
     @ResponseStatus(HttpStatus.NO_CONTENT)

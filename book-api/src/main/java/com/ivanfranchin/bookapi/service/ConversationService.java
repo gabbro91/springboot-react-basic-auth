@@ -17,9 +17,11 @@ public interface ConversationService {
 
     List<Conversation> getConversationsByTopicAndCategory(String topic, String category);
 
+    List<Conversation> getConversationsByConversationUid(int id);
+
     Conversation saveConversation(Conversation conversation);
 
-    void disableConversation(Long id);
+    void disableConversation(int id);
 
     void deleteConversation(Long id);
 }

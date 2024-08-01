@@ -44,15 +44,22 @@ public class ConversationServiceImpl implements ConversationService {
     }
 
     @Override
+    public List<Conversation> getConversationsByConversationUid(int id) {
+        return conversationRepository.findByConversationUid(id);
+    }
+
+    @Override
     public Conversation saveConversation(Conversation conversation) {
         return conversationRepository.save(conversation);
     }
 
-    public void disableConversation(Long id) {
-        Conversation conversation = getConversationById(id)
-                .orElseThrow(() -> new RuntimeException("Conversation not found"));
-        conversation.setEnabled(false);
-        conversationRepository.save(conversation);
+    @Override
+    public void disableConversation(int conversationUid) {
+        List<Conversation> conversations = conversationRepository.findByConversationUid(conversationUid);
+        for (Conversation conversation : conversations) {
+            conversation.setEnabled(false);
+            conversationRepository.save(conversation);
+        }
     }
 
     @Override
