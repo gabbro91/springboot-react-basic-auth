@@ -39,6 +39,7 @@ function ConversationTable({
       (book) => book.conversation_uid === conversationId
     );
     setSelectedBooks(booksForConversation);
+    console.log("booksForConversation",booksForConversation)
     setSelected(booksForConversation);
     setShowBooksTable(false);
     setShowChatTable(true);
@@ -126,6 +127,15 @@ function ConversationTable({
     const lastConversation =
       filteredConversations[filteredConversations.length - 1].timestamp;
     return lastConversation; // Restituisci "N/A" se non ci sono conversazioni
+  };
+
+  const lenghtBooks = (conversationId) => {
+    const booksForConversation = books.filter(
+      (book) => book.conversation_uid === conversationId
+      
+    );
+    console.log("lenght", booksForConversation)
+    return booksForConversation.length
   };
 
   const getLenghtForTopic = (topic) => {
@@ -216,7 +226,7 @@ function ConversationTable({
           <Table.Cell>
             {showBooksTable ? book.timestamp : book.input}
           </Table.Cell>
-          <Table.Cell>{showBooksTable ? "" : book.input}</Table.Cell>
+          <Table.Cell>{showBooksTable ? lenghtBooks(book.conversation_uid) : book.input}</Table.Cell>
         </Table.Row>
       ));
   }
