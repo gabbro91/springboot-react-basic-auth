@@ -29,4 +29,7 @@ public class CreateConversationRequest {
     @Schema(example = "1")
     private int conversationUid;
 
+    @Schema(example = "true")
+    private boolean enabled;
+
 }
