@@ -15,5 +15,6 @@ public class ConversationDto {
     private int conversation_uid;
     private int id_assistant;
     private long conversationCount;
+    private boolean enabled;
 
 }

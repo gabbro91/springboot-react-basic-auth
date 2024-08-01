@@ -30,4 +30,6 @@ public class Conversation {
 
     private int id_assistant;
 
+    private Boolean enabled;
+
 }

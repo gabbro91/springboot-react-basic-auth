@@ -48,6 +48,13 @@ public class ConversationServiceImpl implements ConversationService {
         return conversationRepository.save(conversation);
     }
 
+    public void disableConversation(Long id) {
+        Conversation conversation = getConversationById(id)
+                .orElseThrow(() -> new RuntimeException("Conversation not found"));
+        conversation.setEnabled(false);
+        conversationRepository.save(conversation);
+    }
+
     @Override
     public void deleteConversation(Long id) {
         conversationRepository.deleteById(id);

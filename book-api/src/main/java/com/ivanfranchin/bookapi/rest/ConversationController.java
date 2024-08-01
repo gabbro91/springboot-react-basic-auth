@@ -48,6 +48,12 @@ public class ConversationController {
         return conversationMapper.toConversationDto(conversation);
     }
 
+    @Operation(security = {@SecurityRequirement(name = "BASIC_AUTH_SECURITY_SCHEME")})
+    @PutMapping("/disable/{id}")
+    public void disableConversation(@PathVariable Long id) {
+        conversationService.disableConversation(id);
+    }
+
 
 
     @Operation(security = {@SecurityRequirement(name = "BASIC_AUTH_SECURITY_SCHEME")})

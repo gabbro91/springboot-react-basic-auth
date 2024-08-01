@@ -26,6 +26,7 @@ public class ConversationMapperImpl implements ConversationMapper {
         conversation.setTimestamp(createConversationRequest.getTimestamp());
         conversation.setConversationUid(createConversationRequest.getConversationUid());
         conversation.setId_assistant(createConversationRequest.getId_assistant());
+        conversation.setEnabled(createConversationRequest.isEnabled());
         return conversation;
     }
 
@@ -42,6 +43,7 @@ public class ConversationMapperImpl implements ConversationMapper {
         conversationDto.setTimestamp(conversation.getTimestamp());
         conversationDto.setConversation_uid(conversation.getConversationUid());
         conversationDto.setId_assistant(conversation.getId_assistant());
+        conversationDto.setEnabled(Boolean.TRUE.equals(conversation.getEnabled()));
 
         return conversationDto;
     }

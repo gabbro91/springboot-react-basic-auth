@@ -19,5 +19,7 @@ public interface ConversationService {
 
     Conversation saveConversation(Conversation conversation);
 
+    void disableConversation(Long id);
+
     void deleteConversation(Long id);
 }
