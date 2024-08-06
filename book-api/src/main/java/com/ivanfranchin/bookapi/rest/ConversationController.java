@@ -135,10 +135,11 @@ public class ConversationController {
 //        return conversationMapper.toConversationDto(conversationService.saveConversation(conversation));
 //    }
 
+
     @Operation(security = {@SecurityRequirement(name = "BASIC_AUTH_SECURITY_SCHEME")})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    public void deleteConversation(@PathVariable Long id) {
-        conversationService.deleteConversation(id);
+    public void deleteConversationsByConversationUid(@PathVariable int id) {
+        conversationService.deleteConversationsByConversationUid(id);
     }
 }

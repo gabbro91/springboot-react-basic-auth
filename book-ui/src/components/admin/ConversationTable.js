@@ -20,6 +20,7 @@ function ConversationTable({
   handleSearchBook,
   conversations,
   allConversations,
+  handleDeleteConversations,
 }) {
   const [selectedBooks, setSelectedBooks] = useState([]);
   const [showBooksTable, setShowBooksTable] = useState(false);
@@ -39,7 +40,7 @@ function ConversationTable({
       (book) => book.conversation_uid === conversationId
     );
     setSelectedBooks(booksForConversation);
-    console.log("booksForConversation",booksForConversation)
+    console.log("booksForConversation", booksForConversation);
     setSelected(booksForConversation);
     setShowBooksTable(false);
     setShowChatTable(true);
@@ -132,10 +133,9 @@ function ConversationTable({
   const lenghtBooks = (conversationId) => {
     const booksForConversation = books.filter(
       (book) => book.conversation_uid === conversationId
-      
     );
-    console.log("lenght", booksForConversation)
-    return booksForConversation.length
+    console.log("lenght", booksForConversation);
+    return booksForConversation.length;
   };
 
   const getLenghtForTopic = (topic) => {
@@ -194,10 +194,11 @@ function ConversationTable({
   if (mainTable) {
     console.log("conv", conversations);
     bookList = filteredConversations.map((conversation) => (
-      <Table.Row key={conversation.id}>
-        <Table.Cell onClick={() => handleShowConversations(conversation.user)}>
-          {conversation.user}
-        </Table.Cell>
+      <Table.Row
+        key={conversation.id}
+        onClick={() => handleShowConversations(conversation.user)}
+      >
+        <Table.Cell>{conversation.user}</Table.Cell>
         <Table.Cell>{conversation.conversationCount}</Table.Cell>
         <Table.Cell>{getLastTimestampForTopic(conversation.user)}</Table.Cell>
       </Table.Row>
@@ -215,6 +216,15 @@ function ConversationTable({
       })
       .map((book) => (
         <Table.Row key={book.id}>
+          <Table.Cell collapsing>
+            <Button
+              circular
+              color="red"
+              size="small"
+              icon="trash"
+              onClick={() => handleDeleteConversations(book.conversation_uid)}
+            />
+          </Table.Cell>
           <Table.Cell
             onClick={() =>
               handleShowBooks(book.conversation_uid, book.timestamp)
@@ -222,11 +232,23 @@ function ConversationTable({
           >
             {showBooksTable ? book.conversation_uid : book.conversation_uid}
           </Table.Cell>
-          <Table.Cell>{showBooksTable ? book.title : book.title}</Table.Cell>
+          <Table.Cell
+            onClick={() =>
+              handleShowBooks(book.conversation_uid, book.timestamp)
+            }
+          >
+            {showBooksTable ? book.title : book.title}
+          </Table.Cell>
           <Table.Cell>
             {showBooksTable ? book.timestamp : book.input}
           </Table.Cell>
-          <Table.Cell>{showBooksTable ? lenghtBooks(book.conversation_uid) : book.input}</Table.Cell>
+          <Table.Cell
+            onClick={() =>
+              handleShowBooks(book.conversation_uid, book.timestamp)
+            }
+          >
+            {showBooksTable ? lenghtBooks(book.conversation_uid) : book.input}
+          </Table.Cell>
         </Table.Row>
       ));
   }
@@ -236,15 +258,17 @@ function ConversationTable({
       <Grid stackable divided>
         <Grid.Row columns="1">
           <Grid.Column width="5">
-            <Form onSubmit={handleSearchBook}>
-              <Input
-                action={{ icon: "search" }}
-                name="bookTextSearch"
-                placeholder="Search by User"
-                value={bookTextSearch}
-                onChange={handleInputChanged}
-              />
-            </Form>
+            {mainTable && (
+              <Form onSubmit={handleSearchBook}>
+                <Input
+                  action={{ icon: "search" }}
+                  name="bookTextSearch"
+                  placeholder="Search by User"
+                  value={bookTextSearch}
+                  onChange={handleInputChanged}
+                />
+              </Form>
+            )}
           </Grid.Column>
           {/* <Grid.Column>
             <BookForm
@@ -269,7 +293,7 @@ function ConversationTable({
                   style={{ backgroundColor: "#ADD8E6" }}
                   width={4}
                 >
-                  {!showBooksTable ? "Conversations" : "Conversations"}
+                  {!showBooksTable ? "Conversation ID" : "Conversation"}
                 </Table.HeaderCell>
                 <Table.HeaderCell
                   style={{ backgroundColor: "#ADD8E6" }}
@@ -329,8 +353,9 @@ function ConversationTable({
           <Table compact striped selectable>
             <Table.Header>
               <Table.Row>
+                {showBooksTable && <Table.HeaderCell width={1} />}
                 <Table.HeaderCell width={4}>
-                  {showBooksTable ? "Conversations" : "Username"}
+                  {showBooksTable ? "Conversation ID" : "Username"}
                 </Table.HeaderCell>
                 <Table.HeaderCell width={4}>
                   {showBooksTable ? "Conv-name" : "Conversations"}
@@ -338,9 +363,11 @@ function ConversationTable({
                 <Table.HeaderCell width={4}>
                   {showBooksTable ? "Date" : "LastUpdate"}
                 </Table.HeaderCell>
-                <Table.HeaderCell width={8}>
-                  {showBooksTable ? "#queries" : ""}
-                </Table.HeaderCell>
+                {!mainTable && (
+                  <Table.HeaderCell width={8}>
+                    {showBooksTable ? "#queries" : ""}
+                  </Table.HeaderCell>
+                )}
               </Table.Row>
             </Table.Header>
             <Table.Body>{bookList}</Table.Body>

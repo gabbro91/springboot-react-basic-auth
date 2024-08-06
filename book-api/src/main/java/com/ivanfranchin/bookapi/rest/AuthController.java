@@ -48,7 +48,7 @@ public class AuthController {
         }
 
         User user = userService.saveUser(createUser(signUpRequest));
-        emailService.sendVerificationEmail(user.getEmail(), user.getVerificationToken());
+        //emailService.sendVerificationEmail(user.getEmail(), user.getVerificationToken());
 
         return new AuthResponse(user.getId(), user.getName(), user.getRole());
     }

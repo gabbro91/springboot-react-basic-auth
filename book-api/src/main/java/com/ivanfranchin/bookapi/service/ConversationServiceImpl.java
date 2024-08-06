@@ -2,6 +2,7 @@ package com.ivanfranchin.bookapi.service;
 
 import com.ivanfranchin.bookapi.model.Conversation;
 import com.ivanfranchin.bookapi.repository.ConversationRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,8 +63,10 @@ public class ConversationServiceImpl implements ConversationService {
         }
     }
 
+
     @Override
-    public void deleteConversation(Long id) {
-        conversationRepository.deleteById(id);
+    @Transactional // Aggiungi questa annotazione
+    public void deleteConversationsByConversationUid(int conversationUid) {
+        conversationRepository.deleteByConversationUid(conversationUid); // Usa il nuovo metodo
     }
 }

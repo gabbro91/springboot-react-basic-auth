@@ -13,7 +13,8 @@ export const bookApi = {
   addBook,
   updateUserRole,
   getConversations,
-  getAllConversations
+  getAllConversations,
+  deleteConversation
 }
 
 function authenticate(username, password) {
@@ -65,6 +66,12 @@ function getAllConversations(user) {
 
 function deleteUser(user, username) {
   return instance.delete(`/api/users/${username}`, {
+    headers: { 'Authorization': basicAuth(user) }
+  })
+}
+
+function deleteConversation(user, id) {
+  return instance.delete(`/api/conversations/${id}`, {
     headers: { 'Authorization': basicAuth(user) }
   })
 }

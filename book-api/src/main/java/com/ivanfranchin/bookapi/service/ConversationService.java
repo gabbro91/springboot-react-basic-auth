@@ -23,5 +23,5 @@ public interface ConversationService {
 
     void disableConversation(int id);
 
-    void deleteConversation(Long id);
+    void deleteConversationsByConversationUid(int conversationUid);
 }

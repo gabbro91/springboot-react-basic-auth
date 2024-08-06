@@ -28,6 +28,7 @@ function AdminPage() {
     handleGetBooks()
     handleGetConversations()
     handleGetAllConversations()
+    handleDeleteConversations()
   }, [])
 
   const handleInputChange = (e, { name, value }) => {
@@ -64,9 +65,20 @@ function AdminPage() {
     }
   }
 
+  const handleDeleteConversations = async (id) => {
+    try {
+      await bookApi.deleteConversation(user, id)
+      window.location.reload();
+
+    } catch (error) {
+      handleLogError(error)
+    }
+  }
+
   const handleRoleChange = async (username, newRole) => {
     try {
       await bookApi.updateUserRole(user, username, newRole)
+      window.location.reload();
       //setUsers(users.map(u => (u.id === userId ? { ...u, role: newRole } : u)))
     } catch (error) {
       handleLogError(error)
@@ -186,6 +198,7 @@ function AdminPage() {
         handleDeleteBook={handleDeleteBook}
         handleSearchBook={handleSearchBook}
         handleInputChange={handleInputChange}
+        handleDeleteConversations={handleDeleteConversations}
       />
     </Container>
   )

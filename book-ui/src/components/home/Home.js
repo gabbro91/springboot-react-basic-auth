@@ -53,7 +53,7 @@ function Home() {
             <Segment color='blue'>
               <Statistic>
                 <Statistic.Value><Icon name='book' color='grey' />{numberOfBooks}</Statistic.Value>
-                <Statistic.Label>Messagge</Statistic.Label>
+                <Statistic.Label>Questions</Statistic.Label>
               </Statistic>
             </Segment>
           </Grid.Column>

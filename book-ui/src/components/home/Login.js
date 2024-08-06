@@ -12,6 +12,7 @@ function Login() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [isError, setIsError] = useState(false)
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false)
 
   const handleInputChange = (e, { name, value }) => {
     if (name === 'username') {
@@ -19,6 +20,11 @@ function Login() {
     } else if (name === 'password') {
       setPassword(value)
     }
+  }
+
+
+  const handlePasswordVisibilityToggle = () => {
+    setIsPasswordVisible(!isPasswordVisible)
   }
 
   const handleSubmit = async (e) => {
@@ -68,19 +74,23 @@ function Login() {
             <Form.Input
               fluid
               name='password'
-              icon='lock'
+              icon={{
+                name: isPasswordVisible ? 'eye' : 'lock',
+                link: true,
+                onClick: handlePasswordVisibilityToggle
+              }}
               iconPosition='left'
               placeholder='Password'
-              type='password'
+              type={isPasswordVisible ? 'text' : 'password'}
               value={password}
               onChange={handleInputChange}
             />
             <Button color='blue' fluid size='large'>Login</Button>
           </Segment>
         </Form>
-        <Message>{`Don't have already an account? `}
+        {/* <Message>{`Don't have already an account? `}
           <NavLink to="/signup" as={NavLink} color='teal'>Sign Up</NavLink>
-        </Message>
+        </Message> */}
         {isError && <Message negative>The username or password provided are incorrect!</Message>}
       </Grid.Column>
     </Grid>
