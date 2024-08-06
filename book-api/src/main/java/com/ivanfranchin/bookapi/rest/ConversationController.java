@@ -135,7 +135,6 @@ public class ConversationController {
 //        return conversationMapper.toConversationDto(conversationService.saveConversation(conversation));
 //    }
 
-
     @Operation(security = {@SecurityRequirement(name = "BASIC_AUTH_SECURITY_SCHEME")})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")

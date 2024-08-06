@@ -11,5 +11,6 @@ public interface ConversationRepository extends JpaRepository<Conversation, Long
     List<Conversation> findByTopicAndCategory(String topic,String category);
     List<Conversation> findByConversationUid(int id);
     void deleteByConversationUid(int conversationUid);
+
     List<Conversation> findByTopic(String topic);
 }
