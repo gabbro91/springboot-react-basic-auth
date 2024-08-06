@@ -7,7 +7,7 @@ import ConversationTable from './ConversationTable'
 function AdminTab(props) {
   const { handleInputChange } = props
   const { isUsersLoading, users, userUsernameSearch, handleDeleteUser, handleRoleChange, handleSearchUser } = props
-  const { isBooksLoading, books, bookIsbn, bookTitle, bookTextSearch, handleAddBook, handleDeleteBook, handleSearchBook, conversations, allConversations ,handleDeleteConversations} = props
+  const { isBooksLoading, books, bookIsbn, bookTitle, bookTextSearch, handleAddBook, handleDeleteBook, handleSearchBook, conversations, allConversations } = props
   
   const panes = [
     {
@@ -40,7 +40,6 @@ function AdminTab(props) {
             handleAddBook={handleAddBook}
             handleDeleteBook={handleDeleteBook}
             handleSearchBook={handleSearchBook}
-            handleDeleteConversations={handleDeleteConversations}
           />
         </Tab.Pane>
       )

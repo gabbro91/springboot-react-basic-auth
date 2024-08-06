@@ -9,6 +9,8 @@ import {
   Table,
 } from "semantic-ui-react";
 import BookForm from "./BookForm";
+import { bookApi } from "../misc/BookApi";
+import { useAuth } from "../context/AuthContext";
 
 function ConversationTable({
   books,
@@ -20,7 +22,6 @@ function ConversationTable({
   handleSearchBook,
   conversations,
   allConversations,
-  handleDeleteConversations,
 }) {
   const [selectedBooks, setSelectedBooks] = useState([]);
   const [showBooksTable, setShowBooksTable] = useState(false);
@@ -35,6 +36,10 @@ function ConversationTable({
   const [filteredConversations, setFilteredConversations] =
     useState(allConversations);
 
+    const Auth = useAuth()
+    const user = Auth.getUser()
+    const isAdmin = user.role === 'ADMIN'
+
   const handleShowBooks = (conversationId, time) => {
     const booksForConversation = books.filter(
       (book) => book.conversation_uid === conversationId
@@ -47,6 +52,15 @@ function ConversationTable({
     transformAndSetMessages(booksForConversation);
     setTime(time);
   };
+  
+  const handleDeleteConversations = async (id) => {
+    try {
+      await bookApi.deleteConversation(user, id)
+      window.location.reload();
+
+    } catch (error) {
+    }
+  }
 
   const handleShowConversations = (topic) => {
     const ConversationByUser = conversations.filter(
