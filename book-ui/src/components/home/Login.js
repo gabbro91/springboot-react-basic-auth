@@ -36,7 +36,7 @@ function Login() {
     }
 
     try {
-      const response = await bookApi.authenticate(username, password)
+      const response = await bookApi.authenticate(username.toLowerCase(), password)
       const { id, name, role } = response.data
       const authdata = window.btoa(username + ':' + password)
       const authenticatedUser = { id, name, role, authdata }
