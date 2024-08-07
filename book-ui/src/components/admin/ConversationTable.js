@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Form,
@@ -22,6 +22,8 @@ function ConversationTable({
   handleSearchBook,
   conversations,
   allConversations,
+  trigger,
+
 }) {
   const [selectedBooks, setSelectedBooks] = useState([]);
   const [showBooksTable, setShowBooksTable] = useState(false);
@@ -33,12 +35,21 @@ function ConversationTable({
   const [userConv, setUserConv] = useState([]);
   const [mainTable, setMainTable] = useState(true);
   const [bookTextSearch, setBookTextSearch] = useState("");
+  const [activeTabIndex, setActiveTabIndex] = useState(true)
+
   const [filteredConversations, setFilteredConversations] =
     useState(allConversations);
 
     const Auth = useAuth()
     const user = Auth.getUser()
     const isAdmin = user.role === 'ADMIN'
+
+    useEffect(() => {
+        setMainTable(true);
+        setShowBooksTable(false);
+        setShowChatTable(false);
+      console.log(trigger)
+    }, [trigger]);
 
   const handleShowBooks = (conversationId, time) => {
     const booksForConversation = books.filter(
@@ -49,6 +60,7 @@ function ConversationTable({
     setSelected(booksForConversation);
     setShowBooksTable(false);
     setShowChatTable(true);
+    setActiveTabIndex(false)
     transformAndSetMessages(booksForConversation);
     setTime(time);
   };
@@ -71,6 +83,7 @@ function ConversationTable({
     setUserConv(ConversationByUser);
     setQueries(ConversationByUser.length - 1);
     setShowBooksTable(true);
+    setActiveTabIndex(false)
     setMainTable(false);
   };
 
@@ -82,6 +95,7 @@ function ConversationTable({
       setShowChatTable(false);
       setShowBooksTable(true);
       setMainTable(false);
+      setActiveTabIndex(false)
     }
   };
 
