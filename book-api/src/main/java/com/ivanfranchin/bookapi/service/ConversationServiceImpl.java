@@ -63,6 +63,16 @@ public class ConversationServiceImpl implements ConversationService {
         }
     }
 
+    @Override
+    public List<Conversation> editTitleConversation(String title, int conversationUid) {
+        List<Conversation> conversations = conversationRepository.findByConversationUid(conversationUid);
+        for (Conversation conversation : conversations) {
+            conversation.setTitle(title);
+            conversationRepository.save(conversation);
+        }
+        return conversations;
+    }
+
 
     @Override
     @Transactional // Aggiungi questa annotazione

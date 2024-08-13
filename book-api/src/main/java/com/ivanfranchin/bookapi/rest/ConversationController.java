@@ -54,6 +54,12 @@ public class ConversationController {
         conversationService.disableConversation(conversationUid);
     }
 
+    @Operation(security = {@SecurityRequirement(name = "BASIC_AUTH_SECURITY_SCHEME")})
+    @PutMapping("/edit/{title}/{conversationUid}")
+    public void editConversations(@PathVariable String title, @PathVariable int conversationUid) {
+        conversationService.editTitleConversation(title,conversationUid);
+    }
+
 
 
     @Operation(security = {@SecurityRequirement(name = "BASIC_AUTH_SECURITY_SCHEME")})

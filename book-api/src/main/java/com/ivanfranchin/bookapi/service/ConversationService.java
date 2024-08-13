@@ -23,5 +23,7 @@ public interface ConversationService {
 
     void disableConversation(int id);
 
+    List<Conversation> editTitleConversation(String title, int conversationId);
+
     void deleteConversationsByConversationUid(int conversationUid);
 }
